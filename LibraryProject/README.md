@@ -1,1 +1,0 @@
-This is a project on the introduction to Django
