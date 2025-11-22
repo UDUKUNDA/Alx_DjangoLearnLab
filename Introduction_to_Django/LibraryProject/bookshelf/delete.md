@@ -1,17 +1,18 @@
 # Delete Operation
 
+### Python Command:
+
 ```python
+from bookshelf.models import Book
+
+# Retrieve the book by title or ID
+book = Book.objects.get(title="1984")
+
 # Delete the book
-book = Book.objects.get(title="Nineteen Eighty-Four")
 book.delete()
 
 # Confirm deletion
-books = Book.objects.all()
-print(books)
+Book.objects.all()
 
-# Expected Output:
-# <QuerySet []>
-
-Explanation:  
-- Deletes the object.  
-- QuerySet is empty, confirming deletion.
+(1, {'bookshelf.Book': 1})
+<QuerySet []>
