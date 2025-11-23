@@ -145,5 +145,32 @@ CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'",)
 CSP_IMG_SRC = ("'self'",)
+ 
+# ---------------------------
+#  SECURITY: HTTPS Settings
+# ---------------------------
+
+# Redirect all HTTP → HTTPS
+SECURE_SSL_REDIRECT = True  # Forces HTTPS
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# ---------------------------
+#  Secure Cookies
+# ---------------------------
+SESSION_COOKIE_SECURE = True  # Only send session cookies via HTTPS
+CSRF_COOKIE_SECURE = True     # Only send CSRF cookies via HTTPS
+
+# ---------------------------
+#  Security Headers
+# ---------------------------
+X_FRAME_OPTIONS = "DENY"                     # Prevent clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True          # Prevent MIME type sniffing
+SECURE_BROWSER_XSS_FILTER = True            # Enable basic XSS protection
+
+
 
 
