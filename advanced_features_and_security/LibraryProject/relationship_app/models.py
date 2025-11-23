@@ -27,6 +27,10 @@ class Book(models.Model):
             ('can_add_book', 'Can add book'),
             ('can_change_book', 'Can change book'),
             ('can_delete_book', 'Can delete book'),
+            ('can_view', 'Can view book'),
+            ('can_create', 'Can create book'),
+            ('can_edit', 'Can edit book'),
+            ('can_delete', 'Can delete book'),
         ]
 
     def __str__(self):
@@ -79,3 +83,4 @@ def create_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
 
  
+

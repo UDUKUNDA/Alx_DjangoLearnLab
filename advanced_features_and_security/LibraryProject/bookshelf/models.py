@@ -1,11 +1,28 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
+# Permissions and Groups Setup
+#
+# - Custom permissions added to Book model: can_view, can_create, can_edit, can_delete
+# - Groups:
+#     - Admins: All permissions
+#     - Editors: can_view, can_create, can_edit
+#     - Viewers: can_view
+# - Views are protected with @permission_required decorator
+#
 # Create your models here.
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     publication_year = models.IntegerField()
+
+    class Meta:
+        permissions = [
+            ('can_view', 'Can view book'),
+            ('can_create', 'Can create book'),
+            ('can_edit', 'Can edit book'),
+            ('can_delete', 'Can delete book'),
+        ]
 
 # -----------------------
 # Custom User Manager
