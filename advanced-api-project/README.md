@@ -24,6 +24,29 @@ The API uses DRF's generic views to provide CRUD operations for the `Book` model
 - **ListView & DetailView**: Accessible to everyone (Read-Only). `IsAuthenticatedOrReadOnly` ensures that unauthenticated users can only view data.
 - **CreateView, UpdateView, DeleteView**: Restricted to authenticated users (`IsAuthenticated`).
 
+### Advanced Features (Filtering, Searching, Ordering)
+The `BookListView` endpoint (`/api/books/`) supports powerful query parameters to refine results:
+
+**1. Filtering**
+Filter books by exact matches on specific fields.
+- **By Author Name**: `/api/books/?author__name=J.K. Rowling`
+- **By Publication Year**: `/api/books/?publication_year=1997`
+- **By Title**: `/api/books/?title=Harry Potter`
+
+**2. Searching**
+Perform text searches across `title` and `author` fields.
+- **Search**: `/api/books/?search=Potter` (Matches "Potter" in title or author name)
+
+**3. Ordering**
+Sort the results by specific fields. Use a hyphen `-` for descending order.
+- **Order by Title (A-Z)**: `/api/books/?ordering=title`
+- **Order by Publication Year (Newest first)**: `/api/books/?ordering=-publication_year`
+
+**Combinations**
+You can combine these parameters:
+- *Example*: Find books by "J.K. Rowling" published in "1997", ordered by title:
+  `/api/books/?author__name=J.K. Rowling&publication_year=1997&ordering=title`
+
 ### Validation
 - **BookSerializer**: Custom validation ensures that `publication_year` cannot be in the future.
 
