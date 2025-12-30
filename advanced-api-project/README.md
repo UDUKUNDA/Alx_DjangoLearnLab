@@ -50,6 +50,18 @@ You can combine these parameters:
 ### Validation
 - **BookSerializer**: Custom validation ensures that `publication_year` cannot be in the future.
 
+## Testing
+This project includes a comprehensive test suite to verify the functionality of the API. The tests cover:
+- **CRUD Operations**: Ensuring books can be created, read, updated, and deleted.
+- **Permissions**: Verifying that unauthenticated users have read-only access and cannot modify data.
+- **Advanced Features**: Testing filtering, searching, and ordering capabilities.
+
+### Running Tests
+To run the tests, use the following command:
+```bash
+python manage.py test api
+```
+
 ## Setup Instructions
 
 1. **Install Dependencies**:
