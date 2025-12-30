@@ -12,15 +12,32 @@
          <nav> 
              <ul> 
                  <li><a href="{% url 'home' %}">Home</a></li> 
-                 <li><a href="{% url 'posts' %}">Blog Posts</a></li> 
-                 <li><a href="{% url 'login' %}">Login</a></li> 
-                 <li><a href="{% url 'register' %}">Register</a></li> 
-             </ul> 
-         </nav> 
-     </header> 
- 
-     <div class="content"> 
-         {% block content %} 
+                <li><a href="{% url 'posts' %}">Blog Posts</a></li> 
+                {% if user.is_authenticated %}
+                  <li><a href="{% url 'profile' %}">Profile</a></li> 
+                  <li>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background:none; border:none; color:inherit; cursor:pointer; font:inherit; padding:0;">Logout</button>
+                    </form>
+                  </li> 
+                {% else %}
+                  <li><a href="{% url 'login' %}">Login</a></li> 
+                  <li><a href="{% url 'register' %}">Register</a></li> 
+                {% endif %}
+            </ul> 
+        </nav> 
+    </header> 
+
+    <div class="content"> 
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %} 
          <!-- Page-specific content goes here --> 
          {% endblock %} 
      </div> 
