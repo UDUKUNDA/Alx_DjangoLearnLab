@@ -11,12 +11,34 @@ from django.views.generic import (
     DeleteView
 )
 from django.urls import reverse
+from django.db.models import Q
 from .models import Post, Comment
 from .forms import CustomUserCreationForm, UserUpdateForm, CommentForm
 
 # Create your views here.
 def home(request):
     return render(request, 'blog/base.html')
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) | 
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+    else:
+        posts = Post.objects.none()
+    return render(request, 'blog/search_results.html', {'posts': posts, 'query': query})
+
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+    ordering = ['-published_date']
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs.get('tag_slug'))
 
 class PostListView(ListView):
     model = Post
@@ -35,7 +57,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'tags']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -46,7 +68,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'tags']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
